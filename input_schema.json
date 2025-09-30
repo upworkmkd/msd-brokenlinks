@@ -1,0 +1,73 @@
+{
+  "title": "MSD Broken Links Analysis Input",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "startUrl": {
+      "title": "Start URL",
+      "type": "string",
+      "description": "The homepage URL to start crawling from",
+      "pattern": "^https?://.*",
+      "prefill": "https://example.com",
+      "editor": "textfield"
+    },
+    "maxPages": {
+      "title": "Maximum Pages to Check",
+      "type": "integer",
+      "description": "Maximum number of pages to crawl and check for broken links",
+      "minimum": 1,
+      "maximum": 50,
+      "default": 10,
+      "editor": "number"
+    },
+    "userAgent": {
+      "title": "User Agent",
+      "type": "string",
+      "description": "User agent string to use for requests",
+      "default": "Mozilla/5.0 (compatible; MSD-BrokenLinks/1.0)",
+      "editor": "textfield"
+    },
+    "timeout": {
+      "title": "Request Timeout",
+      "type": "integer",
+      "description": "Timeout for link checking requests (in milliseconds)",
+      "minimum": 1000,
+      "maximum": 30000,
+      "default": 10000,
+      "editor": "number"
+    },
+    "maxRedirects": {
+      "title": "Max Redirects",
+      "type": "integer",
+      "description": "Maximum number of redirects to follow",
+      "minimum": 0,
+      "maximum": 10,
+      "default": 5,
+      "editor": "number"
+    },
+    "includeExternalLinks": {
+      "title": "Include External Links",
+      "type": "boolean",
+      "description": "Whether to check external links (outside the domain)",
+      "default": true,
+      "editor": "checkbox"
+    },
+    "includeInternalLinks": {
+      "title": "Include Internal Links",
+      "type": "boolean",
+      "description": "Whether to check internal links (same domain)",
+      "default": true,
+      "editor": "checkbox"
+    },
+    "batchSize": {
+      "title": "Batch Size",
+      "type": "integer",
+      "description": "Number of links to check simultaneously",
+      "minimum": 1,
+      "maximum": 20,
+      "default": 5,
+      "editor": "number"
+    }
+  },
+  "required": ["startUrl", "maxPages"]
+}
