@@ -177,7 +177,10 @@ Actor.main(async () => {
             }
         };
 
-        // Push the comprehensive result to dataset
+        // Set the comprehensive result as the main output
+        await Actor.setValue('OUTPUT', finalOutput);
+        
+        // Also push to dataset for compatibility
         await Actor.pushData(finalOutput);
 
         console.log(`Broken Links Analysis completed! Processed ${results.length} pages.`);

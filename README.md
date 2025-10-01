@@ -63,7 +63,14 @@ npm start
 
 ## Output Format
 
-The actor returns a comprehensive analysis in the following format:
+The actor returns a comprehensive analysis in two ways:
+
+1. **Key-Value Store** (`OUTPUT` key): Direct object format (recommended for API consumption)
+2. **Dataset**: Array-wrapped format (standard Apify dataset format)
+
+### Key-Value Store Output (Recommended)
+
+Access via `Actor.getValue('OUTPUT')` or through the Apify platform's key-value store. This returns the data directly as an object:
 
 ```json
 {
@@ -115,6 +122,39 @@ The actor returns a comprehensive analysis in the following format:
   }
 }
 ```
+
+### Dataset Output
+
+The dataset contains the same data but wrapped in an array (standard Apify format):
+
+```json
+[
+  {
+    "domain": { ... },
+    "pages": [ ... ],
+    "analysis": { ... }
+  }
+]
+```
+
+### Accessing Output Data
+
+**In Apify Platform:**
+- **Key-Value Store**: Go to "Key-value store" tab and look for the `OUTPUT` key
+- **Dataset**: Go to "Dataset" tab to see the array-wrapped data
+
+**In Code:**
+```javascript
+// Get direct object (recommended)
+const result = await Actor.getValue('OUTPUT');
+
+// Get dataset data (array-wrapped)
+const dataset = await Actor.getDataset();
+const result = dataset.items[0]; // First (and only) item
+```
+
+**In API Response:**
+The local API server returns the data directly as an object (not array-wrapped).
 
 ## Link Analysis Details
 
