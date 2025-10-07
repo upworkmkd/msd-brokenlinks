@@ -12,26 +12,6 @@ A specialized Apify actor for analyzing broken links on websites. This actor cra
 - **Social Media Filtering**: Excludes social media links from external link analysis
 - **Protocol Support**: Handles mailto, tel, sms, and other special protocols
 
-## Installation
-
-1. Clone the repository:
-```bash
-git clone <repository-url>
-cd msd-brokenlinks
-```
-
-2. Install dependencies:
-```bash
-npm install
-```
-
-## Usage
-
-### Basic Usage
-
-```bash
-npm start
-```
 
 ### Input Parameters
 
@@ -137,25 +117,6 @@ The dataset contains the same data but wrapped in an array (standard Apify forma
 ]
 ```
 
-### Accessing Output Data
-
-**In Apify Platform:**
-- **Key-Value Store**: Go to "Key-value store" tab and look for the `OUTPUT` key
-- **Dataset**: Go to "Dataset" tab to see the array-wrapped data
-
-**In Code:**
-```javascript
-// Get direct object (recommended)
-const result = await Actor.getValue('OUTPUT');
-
-// Get dataset data (array-wrapped)
-const dataset = await Actor.getDataset();
-const result = dataset.items[0]; // First (and only) item
-```
-
-**In API Response:**
-The local API server returns the data directly as an object (not array-wrapped).
-
 ## Link Analysis Details
 
 ### Internal Links
@@ -180,40 +141,6 @@ The local API server returns the data directly as an object (not array-wrapped).
 - **400-499**: Client errors (broken links)
 - **500-599**: Server errors (broken links)
 
-## Development
-
-### Running Tests
-```bash
-npm test
-```
-
-### Local Development
-```bash
-npm run dev
-```
-
-### API Server
-```bash
-npm run api
-```
-
-## Configuration
-
-### Environment Variables
-
-Create a `.env` file with the following variables:
-
-```env
-# Optional: Override default user agent
-USER_AGENT=Mozilla/5.0 (compatible; MSD-BrokenLinks/1.0)
-
-# Optional: Override default timeout
-DEFAULT_TIMEOUT=10000
-
-# Optional: Override default batch size
-DEFAULT_BATCH_SIZE=5
-```
-
 ## Performance Considerations
 
 - **Batch Processing**: Links are processed in configurable batches to avoid overwhelming servers
@@ -231,10 +158,6 @@ The actor handles various error scenarios:
 - Redirect loops
 
 All errors are logged and included in the final report for analysis.
-
-## License
-
-MIT License - see LICENSE file for details.
 
 ## Support
 
