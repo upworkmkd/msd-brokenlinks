@@ -27,15 +27,16 @@ class BrokenLinksAnalyzer {
         const linksAnalysis = await this.analyzeLinks($, url, baseDomain);
         
         return {
+            // Links Information (breakdown first, then counts)
+            internalLinks: linksAnalysis.internalLinks,
+            internalLinksCount: linksAnalysis.internalLinksCount,
+            externalLinks: linksAnalysis.externalLinks,
+            externalLinksCount: linksAnalysis.externalLinksCount,
+            brokenInternalLinks: linksAnalysis.brokenInternalLinks,
+            brokenExternalLinks: linksAnalysis.brokenExternalLinks,
             totalLinks: linksAnalysis.totalLinks,
             totalBrokenLinks: linksAnalysis.totalBrokenLinks,
-            brokenLinksPercentage: linksAnalysis.brokenLinksPercentage,
-            internalLinksCount: linksAnalysis.internalLinksCount,
-            externalLinksCount: linksAnalysis.externalLinksCount,
-            internalLinks: linksAnalysis.internalLinks,
-            externalLinks: linksAnalysis.externalLinks,
-            brokenInternalLinks: linksAnalysis.brokenInternalLinks,
-            brokenExternalLinks: linksAnalysis.brokenExternalLinks
+            brokenLinksPercentage: linksAnalysis.brokenLinksPercentage
         };
     }
 
@@ -64,6 +65,7 @@ class BrokenLinksAnalyzer {
         links.each((_, link) => {
             const href = $(link).attr('href');
             const anchorText = $(link).text().trim();
+            const target = $(link).attr('target') || null;
             
             if (href) {
                 try {
@@ -88,9 +90,9 @@ class BrokenLinksAnalyzer {
                     const linkData = {
                         url: url.href,
                         anchorText: anchorText,
+                        target: target,
                         statusCode: null,
-                        isBroken: false,
-                        error: null
+                        isBroken: false
                     };
                     
                     if (url.hostname === baseHost) {
@@ -160,11 +162,9 @@ class BrokenLinksAnalyzer {
                     if (emailAddress && emailAddress.trim() && emailRegex.test(emailAddress.trim())) {
                         link.statusCode = 200;
                         link.isBroken = false;
-                        link.error = null;
                     } else {
                         link.statusCode = 400;
                         link.isBroken = true;
-                        link.error = 'Invalid email address in mailto link';
                     }
                     return;
                 }
@@ -173,7 +173,6 @@ class BrokenLinksAnalyzer {
                 if (link.url.startsWith('tel:') || link.url.startsWith('sms:') || link.url.startsWith('whatsapp:')) {
                     link.statusCode = 200;
                     link.isBroken = false;
-                    link.error = null;
                     return;
                 }
                 
@@ -196,7 +195,6 @@ class BrokenLinksAnalyzer {
                 } catch (error) {
                     link.statusCode = error.response?.status || 0;
                     link.isBroken = true;
-                    link.error = error.message;
                 }
             });
             

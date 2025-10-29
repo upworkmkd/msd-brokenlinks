@@ -224,7 +224,6 @@ function calculateDomainAnalysis(results, baseDomain) {
                         url: link.url,
                         anchorText: link.anchorText,
                         statusCode: link.statusCode,
-                        error: link.error,
                         type: 'internal',
                         foundOnPage: page.url
                     });
@@ -238,7 +237,6 @@ function calculateDomainAnalysis(results, baseDomain) {
                         url: link.url,
                         anchorText: link.anchorText,
                         statusCode: link.statusCode,
-                        error: link.error,
                         type: 'external',
                         foundOnPage: page.url
                     });
