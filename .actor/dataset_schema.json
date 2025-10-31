@@ -1,0 +1,133 @@
+{
+	"actorSpecification": 1,
+	"fields": {
+		"type": "object",
+		"properties": {
+			"domain": {
+				"type": "object",
+				"description": "Aggregated broken links statistics for the entire domain"
+			},
+			"pages": {
+				"type": "array",
+				"description": "Detailed broken links analysis results for each analyzed page"
+			},
+			"analysis": {
+				"type": "object",
+				"description": "Metadata about the broken links analysis run"
+			}
+		}
+	},
+	"views": {
+		"overview": {
+			"title": "Domain Overview",
+			"description": "High-level domain broken links summary",
+			"transformation": {
+				"fields": [
+					"domain.domain_name",
+					"domain.total_pages_analyzed",
+					"domain.total_links",
+					"domain.total_broken_links",
+					"domain.broken_links_percentage",
+					"domain.broken_internal_links",
+					"domain.broken_external_links",
+					"analysis.analysis_completed_at"
+				],
+				"flatten": ["domain", "analysis"]
+			},
+			"display": {
+				"component": "table",
+				"properties": {
+					"domain.domain_name": {
+						"label": "Domain",
+						"format": "text"
+					},
+					"domain.total_pages_analyzed": {
+						"label": "Pages Analyzed",
+						"format": "number"
+					},
+					"domain.total_links": {
+						"label": "Total Links",
+						"format": "number"
+					},
+					"domain.total_broken_links": {
+						"label": "Broken Links",
+						"format": "number"
+					},
+					"domain.broken_links_percentage": {
+						"label": "Broken Links %",
+						"format": "number"
+					},
+					"domain.broken_internal_links": {
+						"label": "Broken Internal",
+						"format": "number"
+					},
+					"domain.broken_external_links": {
+						"label": "Broken External",
+						"format": "number"
+					},
+					"analysis.analysis_completed_at": {
+						"label": "Analysis Date",
+						"format": "date"
+					}
+				}
+			}
+		},
+		"pages": {
+			"title": "Page Analysis",
+			"description": "Detailed broken links analysis for each page",
+			"transformation": {
+				"fields": [
+					"url",
+					"pageStatusCode",
+					"totalLinks",
+					"totalBrokenLinks",
+					"brokenLinksPercentage",
+					"internalLinksCount",
+					"externalLinksCount",
+					"brokenInternalLinks",
+					"brokenExternalLinks",
+					"analysis_date"
+				],
+				"unwind": ["pages"]
+			},
+			"display": {
+				"component": "table",
+				"properties": {
+					"url": {
+						"label": "Page URL",
+						"format": "link"
+					},
+					"pageStatusCode": {
+						"label": "Status",
+						"format": "number"
+					},
+					"totalLinks": {
+						"label": "Total Links",
+						"format": "number"
+					},
+					"totalBrokenLinks": {
+						"label": "Broken Links",
+						"format": "number"
+					},
+					"brokenLinksPercentage": {
+						"label": "Broken %",
+						"format": "number"
+					},
+					"brokenInternalLinks": {
+						"label": "Broken Internal",
+						"format": "number"
+					},
+					"brokenExternalLinks": {
+						"label": "Broken External",
+						"format": "number"
+					},
+					"analysis_date": {
+						"label": "Analysis Date",
+						"format": "date"
+					}
+				}
+			}
+		}
+	}
+}
+

@@ -1,0 +1,26 @@
+{
+	"actorOutputSchemaVersion": 1,
+	"title": "Broken Links Analysis Output Schema",
+	"description": "Output schema for MSD Broken Links Analyzer results",
+	"properties": {
+		"results": {
+			"type": "string",
+			"title": "Broken Links Analysis Results",
+			"description": "Comprehensive broken links analysis including domain-level metrics and per-page analysis",
+			"template": "{{links.apiDefaultDatasetUrl}}/items"
+		},
+		"overview": {
+			"type": "string",
+			"title": "Domain Overview",
+			"description": "High-level domain broken links summary",
+			"template": "{{links.apiDefaultDatasetUrl}}/items?view=overview"
+		},
+		"pages": {
+			"type": "string",
+			"title": "Page Analysis",
+			"description": "Detailed broken links analysis for each page",
+			"template": "{{links.apiDefaultDatasetUrl}}/items?view=pages"
+		}
+	}
+}
+

@@ -1,7 +1,19 @@
 {
 	"actorSpecification": 1,
 	"name": "msd-brokenlinks",
-	"version": "0.0",
+	"title": "Broken Links Analyzer",
+	"description": "Comprehensive broken links analyzer that crawls websites and identifies broken internal and external links",
+	"version": "1.0",
 	"buildTag": "latest",
-	"environmentVariables": {}
+	"environmentVariables": {},
+	"storages": {
+		"dataset": "./dataset_schema.json"
+	},
+	"output": "./output_schema.json",
+	"usageCounters": {
+		"PAGE_ANALYZED": {
+			"label": "Pages analyzed",
+			"description": "Number of web pages analyzed for broken links detection"
+		}
+	}
 }

@@ -66,16 +66,22 @@ app.post('/analyze', async (req, res) => {
 
         const results = [];
         const visitedUrls = new Set();
-        const urlsToProcess = [startUrl];
+        // Normalize start URL before adding to processing queue
+        const normalizedStartUrl = urlNormalizer.normalize(startUrl);
+        const urlsToProcess = [normalizedStartUrl];
         let processedCount = 0;
         
-        // Extract domain from start URL
-        const baseDomain = new URL(startUrl).origin;
+        // Extract domain from normalized start URL
+        const baseDomain = new URL(normalizedStartUrl).origin;
         
         while (urlsToProcess.length > 0 && processedCount < maxPages) {
             const currentUrl = urlsToProcess.shift();
             
-            if (visitedUrls.has(currentUrl)) continue;
+            // Check if already visited (currentUrl is already normalized)
+            if (visitedUrls.has(currentUrl)) {
+                console.log(`Skipping already processed URL: ${currentUrl}`);
+                continue;
+            }
             visitedUrls.add(currentUrl);
             
             console.log(`Processing: ${currentUrl} (${processedCount + 1}/${maxPages})`);
@@ -98,8 +104,8 @@ app.post('/analyze', async (req, res) => {
                 const html = response.data;
                 const statusCode = response.status;
                 
-                // Normalize URL
-                const normalizedUrl = urlNormalizer.normalize(currentUrl);
+                // Use normalized URL (currentUrl is already normalized)
+                const normalizedUrl = currentUrl;
                 
                 // Analyze broken links on this page
                 const brokenLinksData = await brokenLinksAnalyzer.analyzePage({
